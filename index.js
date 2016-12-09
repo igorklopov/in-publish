@@ -19,10 +19,16 @@ function inCommand (cmd) {
   return false
 }
 
+function inYarn () {
+  return /\byarn\b/.test(process.env['npm_config_user_agent']);
+}
+
 exports.inPublish = function () {
+  if (inYarn()) return false;
   return inCommand(/^pu(b(l(i(sh?)?)?)?)?$/)
 }
 
 exports.inInstall = function () {
+  if (inYarn()) return true;
   return inCommand(/^i(n(s(t(a(ll?)?)?)?)?)?$/)
 }
